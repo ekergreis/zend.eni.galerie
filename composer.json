@@ -1,0 +1,20 @@
+{
+    "name": "zf2biz/galerie",
+    "description": "Galerie construite à partir de l'Application blanche pour ZF2",
+    "license": "BSD-3-Clause",
+    "keywords": [
+        "framework",
+        "zf2"
+    ],
+    "homepage": "http://zf2.biz/",
+    "require": {
+        "php": ">=5.3.3",
+        "zendframework/zendframework": "~2.4.11",
+        "doctrine/orm": "2.3",
+        "firephp/firephp-core": "^0.5.3",
+        "jpgraph/jpgraph": "^4.0"
+    },
+    "require-dev": {
+        "zendframework/zend-developer-tools": "1.0.*"
+    }
+}

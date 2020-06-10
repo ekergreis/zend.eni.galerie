@@ -1,0 +1,43 @@
+<?php
+
+namespace Custom\Mvc\Controller\Plugin;
+
+use Zend\Mvc\Controller\Plugin\AbstractPlugin;
+
+use Zend\Session\Container;
+use Zend\Session\SessionManager;
+
+
+class MessageGetter extends AbstractPlugin
+{
+    public function __invoke()
+    {
+        $manager = new SessionManager();
+        $container = new Container('FlashMessenger', $manager);
+        $namespaces = array();
+        $messages = array();
+
+        foreach ($container as $namespace => $messages) {
+            $messages[$namespace] = $messages;
+            $namespaces[] = $namespace;
+        }
+        foreach ($namespaces as $namespace) {
+            unset($container->{$namespace});
+        }
+
+        $result = array();
+        if (isset($messages['infos']) {
+            $result['infos'] = $messages['infos']->toArray();
+        }
+        if (isset($messages['warnings']) {
+            $result['warnings'] = $messages['warnings']->toArray();
+        }
+        if (isset($messages['errors']) {
+            $result['errors'] = $messages['errors']->toArray();
+        }
+
+        return $result;
+    }
+
+}
+

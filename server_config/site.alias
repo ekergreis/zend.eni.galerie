@@ -1,0 +1,16 @@
+Alias /galerie /var/git/zf2biz/galerie/public
+
+<Directory /var/git/zf2biz/galerie/public>
+	Order deny,allow
+	Allow from all
+
+	AllowOverride None
+
+	RewriteEngine On
+	RewriteCond %{REQUEST_FILENAME} -s [OR]
+	RewriteCond %{REQUEST_FILENAME} -l [OR]
+	RewriteCond %{REQUEST_FILENAME} -d
+	RewriteBase /bookzf2
+	RewriteRule ^.*$ - [NC,L]
+	RewriteRule !\.(js|ico|txt|gif|jpg|png|css)$ index.php [NC,L]
+</Directory>

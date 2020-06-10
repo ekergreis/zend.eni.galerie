@@ -1,0 +1,20 @@
+<VirtualHost *:80>
+	ServerName galerie.local
+	DocumentRoot /var/git/zf2biz/gallerie/public
+
+	SetEnv APPLICATION_ENV "development"
+
+	<Directory /var/git/zf2biz/galerie/public>
+		Order deny,allow
+		Allow from all
+
+		AllowOverride None
+	</Directory>
+
+	RewriteEngine On
+	RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} -s [OR]
+	RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} -l [OR]
+	RewriteCond %{DOCUMENT_ROOT}%{REQUEST_FILENAME} -d
+	RewriteRule ^.*$ - [NC,L]
+	RewriteRule ^.*$ /index.php [NC,L]
+</VirtualHost>

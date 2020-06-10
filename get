@@ -1,0 +1,283 @@
+./public/js/jquery-ui.js:(function(a,b){if(a.cleanData){var c=a.cleanData;a.cleanData=function(b){for(var d=0,e;(e=b[d])!=null;d++)try{a(e).triggerHandler("remove")}catch(f){}c(b)}}else{var d=a.fn.remove;a.fn.remove=function(b,c){return this.each(function(){return c||(!b||a.filter(b,[this]).length)&&a("*",this).add([this]).each(function(){try{a(this).triggerHandler("remove")}catch(b){}}),d.call(a(this),b,c)})}}a.widget=function(b,c,d){var e=b.split(".")[0],f;b=b.split(".")[1],f=e+"-"+b,d||(d=c,c=a.Widget),a.expr[":"][f]=function(c){return!!a.data(c,b)},a[e]=a[e]||{},a[e][b]=function(a,b){arguments.length&&this._createWidget(a,b)};var g=new c;g.options=a.extend(!0,{},g.options),a[e][b].prototype=a.extend(!0,g,{namespace:e,widgetName:b,widgetEventPrefix:a[e][b].prototype.widgetEventPrefix||b,widgetBaseClass:f},d),a.widget.bridge(b,a[e][b])},a.widget.bridge=function(c,d){a.fn[c]=function(e){var f=typeof e=="string",g=Array.prototype.slice.call(arguments,1),h=this;return e=!f&&g.length?a.extend.apply(null,[!0,e].concat(g)):e,f&&e.charAt(0)==="_"?h:(f?this.each(function(){var d=a.data(this,c),f=d&&a.isFunction(d[e])?d[e].apply(d,g):d;if(f!==d&&f!==b)return h=f,!1}):this.each(function(){var b=a.data(this,c);b?b.option(e||{})._init():a.data(this,c,new d(e,this))}),h)}},a.Widget=function(a,b){arguments.length&&this._createWidget(a,b)},a.Widget.prototype={widgetName:"widget",widgetEventPrefix:"",options:{disabled:!1},_createWidget:function(b,c){a.data(c,this.widgetName,this),this.element=a(c),this.options=a.extend(!0,{},this.options,this._getCreateOptions(),b);var d=this;this.element.bind("remove."+this.widgetName,function(){d.destroy()}),this._create(),this._trigger("create"),this._init()},_getCreateOptions:function(){return a.metadata&&a.metadata.get(this.element[0])[this.widgetName]},_create:function(){},_init:function(){},destroy:function(){this.element.unbind("."+this.widgetName).removeData(this.widgetName),this.widget().unbind("."+this.widgetName).removeAttr("aria-disabled").removeClass(this.widgetBaseClass+"-disabled "+"ui-state-disabled")},widget:function(){return this.element},option:function(c,d){var e=c;if(arguments.length===0)return a.extend({},this.options);if(typeof c=="string"){if(d===b)return this.options[c];e={},e[c]=d}return this._setOptions(e),this},_setOptions:function(b){var c=this;return a.each(b,function(a,b){c._setOption(a,b)}),this},_setOption:function(a,b){return this.options[a]=b,a==="disabled"&&this.widget()[b?"addClass":"removeClass"](this.widgetBaseClass+"-disabled"+" "+"ui-state-disabled").attr("aria-disabled",b),this},enable:function(){return this._setOption("disabled",!1)},disable:function(){return this._setOption("disabled",!0)},_trigger:function(b,c,d){var e,f,g=this.options[b];d=d||{},c=a.Event(c),c.type=(b===this.widgetEventPrefix?b:this.widgetEventPrefix+b).toLowerCase(),c.target=this.element[0],f=c.originalEvent;if(f)for(e in f)e in c||(c[e]=f[e]);return this.element.trigger(c,d),!(a.isFunction(g)&&g.call(this.element[0],c,d)===!1||c.isDefaultPrevented())}}})(jQuery);;/*! jQuery UI - v1.8.21 - 2012-06-05
+./public/js/jquery-ui.js:(function(a,b){var c="ui-dialog ui-widget ui-widget-content ui-corner-all ",d={buttons:!0,height:!0,maxHeight:!0,maxWidth:!0,minHeight:!0,minWidth:!0,width:!0},e={maxHeight:!0,maxWidth:!0,minHeight:!0,minWidth:!0},f=a.attrFn||{val:!0,css:!0,html:!0,text:!0,data:!0,width:!0,height:!0,offset:!0,click:!0};a.widget("ui.dialog",{options:{autoOpen:!0,buttons:{},closeOnEscape:!0,closeText:"close",dialogClass:"",draggable:!0,hide:null,height:"auto",maxHeight:!1,maxWidth:!1,minHeight:150,minWidth:150,modal:!1,position:{my:"center",at:"center",collision:"fit",using:function(b){var c=a(this).css(b).offset().top;c<0&&a(this).css("top",b.top-c)}},resizable:!0,show:null,stack:!0,title:"",width:300,zIndex:1e3},_create:function(){this.originalTitle=this.element.attr("title"),typeof this.originalTitle!="string"&&(this.originalTitle=""),this.options.title=this.options.title||this.originalTitle;var b=this,d=b.options,e=d.title||"&#160;",f=a.ui.dialog.getTitleId(b.element),g=(b.uiDialog=a("<div></div>")).appendTo(document.body).hide().addClass(c+d.dialogClass).css({zIndex:d.zIndex}).attr("tabIndex",-1).css("outline",0).keydown(function(c){d.closeOnEscape&&!c.isDefaultPrevented()&&c.keyCode&&c.keyCode===a.ui.keyCode.ESCAPE&&(b.close(c),c.preventDefault())}).attr({role:"dialog","aria-labelledby":f}).mousedown(function(a){b.moveToTop(!1,a)}),h=b.element.show().removeAttr("title").addClass("ui-dialog-content ui-widget-content").appendTo(g),i=(b.uiDialogTitlebar=a("<div></div>")).addClass("ui-dialog-titlebar ui-widget-header ui-corner-all ui-helper-clearfix").prependTo(g),j=a('<a href="#"></a>').addClass("ui-dialog-titlebar-close ui-corner-all").attr("role","button").hover(function(){j.addClass("ui-state-hover")},function(){j.removeClass("ui-state-hover")}).focus(function(){j.addClass("ui-state-focus")}).blur(function(){j.removeClass("ui-state-focus")}).click(function(a){return b.close(a),!1}).appendTo(i),k=(b.uiDialogTitlebarCloseText=a("<span></span>")).addClass("ui-icon ui-icon-closethick").text(d.closeText).appendTo(j),l=a("<span></span>").addClass("ui-dialog-title").attr("id",f).html(e).prependTo(i);a.isFunction(d.beforeclose)&&!a.isFunction(d.beforeClose)&&(d.beforeClose=d.beforeclose),i.find("*").add(i).disableSelection(),d.draggable&&a.fn.draggable&&b._makeDraggable(),d.resizable&&a.fn.resizable&&b._makeResizable(),b._createButtons(d.buttons),b._isOpen=!1,a.fn.bgiframe&&g.bgiframe()},_init:function(){this.options.autoOpen&&this.open()},destroy:function(){var a=this;return a.overlay&&a.overlay.destroy(),a.uiDialog.hide(),a.element.unbind(".dialog").removeData("dialog").removeClass("ui-dialog-content ui-widget-content").hide().appendTo("body"),a.uiDialog.remove(),a.originalTitle&&a.element.attr("title",a.originalTitle),a},widget:function(){return this.uiDialog},close:function(b){var c=this,d,e;if(!1===c._trigger("beforeClose",b))return;return c.overlay&&c.overlay.destroy(),c.uiDialog.unbind("keypress.ui-dialog"),c._isOpen=!1,c.options.hide?c.uiDialog.hide(c.options.hide,function(){c._trigger("close",b)}):(c.uiDialog.hide(),c._trigger("close",b)),a.ui.dialog.overlay.resize(),c.options.modal&&(d=0,a(".ui-dialog").each(function(){this!==c.uiDialog[0]&&(e=a(this).css("z-index"),isNaN(e)||(d=Math.max(d,e)))}),a.ui.dialog.maxZ=d),c},isOpen:function(){return this._isOpen},moveToTop:function(b,c){var d=this,e=d.options,f;return e.modal&&!b||!e.stack&&!e.modal?d._trigger("focus",c):(e.zIndex>a.ui.dialog.maxZ&&(a.ui.dialog.maxZ=e.zIndex),d.overlay&&(a.ui.dialog.maxZ+=1,d.overlay.$el.css("z-index",a.ui.dialog.overlay.maxZ=a.ui.dialog.maxZ)),f={scrollTop:d.element.scrollTop(),scrollLeft:d.element.scrollLeft()},a.ui.dialog.maxZ+=1,d.uiDialog.css("z-index",a.ui.dialog.maxZ),d.element.attr(f),d._trigger("focus",c),d)},open:function(){if(this._isOpen)return;var b=this,c=b.options,d=b.uiDialog;return b.overlay=c.modal?new a.ui.dialog.overlay(b):null,b._size(),b._position(c.position),d.show(c.show),b.moveToTop(!0),c.modal&&d.bind("keydown.ui-dialog",function(b){if(b.keyCode!==a.ui.keyCode.TAB)return;var c=a(":tabbable",this),d=c.filter(":first"),e=c.filter(":last");if(b.target===e[0]&&!b.shiftKey)return d.focus(1),!1;if(b.target===d[0]&&b.shiftKey)return e.focus(1),!1}),a(b.element.find(":tabbable").get().concat(d.find(".ui-dialog-buttonpane :tabbable").get().concat(d.get()))).eq(0).focus(),b._isOpen=!0,b._trigger("open"),b},_createButtons:function(b){var c=this,d=!1,e=a("<div></div>").addClass("ui-dialog-buttonpane ui-widget-content ui-helper-clearfix"),g=a("<div></div>").addClass("ui-dialog-buttonset").appendTo(e);c.uiDialog.find(".ui-dialog-buttonpane").remove(),typeof b=="object"&&b!==null&&a.each(b,function(){return!(d=!0)}),d&&(a.each(b,function(b,d){d=a.isFunction(d)?{click:d,text:b}:d;var e=a('<button type="button"></button>').click(function(){d.click.apply(c.element[0],arguments)}).appendTo(g);a.each(d,function(a,b){if(a==="click")return;a in f?e[a](b):e.attr(a,b)}),a.fn.button&&e.button()}),e.appendTo(c.uiDialog))},_makeDraggable:function(){function f(a){return{position:a.position,offset:a.offset}}var b=this,c=b.options,d=a(document),e;b.uiDialog.draggable({cancel:".ui-dialog-content, .ui-dialog-titlebar-close",handle:".ui-dialog-titlebar",containment:"document",start:function(d,g){e=c.height==="auto"?"auto":a(this).height(),a(this).height(a(this).height()).addClass("ui-dialog-dragging"),b._trigger("dragStart",d,f(g))},drag:function(a,c){b._trigger("drag",a,f(c))},stop:function(g,h){c.position=[h.position.left-d.scrollLeft(),h.position.top-d.scrollTop()],a(this).removeClass("ui-dialog-dragging").height(e),b._trigger("dragStop",g,f(h)),a.ui.dialog.overlay.resize()}})},_makeResizable:function(c){function h(a){return{originalPosition:a.originalPosition,originalSize:a.originalSize,position:a.position,size:a.size}}c=c===b?this.options.resizable:c;var d=this,e=d.options,f=d.uiDialog.css("position"),g=typeof c=="string"?c:"n,e,s,w,se,sw,ne,nw";d.uiDialog.resizable({cancel:".ui-dialog-content",containment:"document",alsoResize:d.element,maxWidth:e.maxWidth,maxHeight:e.maxHeight,minWidth:e.minWidth,minHeight:d._minHeight(),handles:g,start:function(b,c){a(this).addClass("ui-dialog-resizing"),d._trigger("resizeStart",b,h(c))},resize:function(a,b){d._trigger("resize",a,h(b))},stop:function(b,c){a(this).removeClass("ui-dialog-resizing"),e.height=a(this).height(),e.width=a(this).width(),d._trigger("resizeStop",b,h(c)),a.ui.dialog.overlay.resize()}}).css("position",f).find(".ui-resizable-se").addClass("ui-icon ui-icon-grip-diagonal-se")},_minHeight:function(){var a=this.options;return a.height==="auto"?a.minHeight:Math.min(a.minHeight,a.height)},_position:function(b){var c=[],d=[0,0],e;if(b){if(typeof b=="string"||typeof b=="object"&&"0"in b)c=b.split?b.split(" "):[b[0],b[1]],c.length===1&&(c[1]=c[0]),a.each(["left","top"],function(a,b){+c[a]===c[a]&&(d[a]=c[a],c[a]=b)}),b={my:c.join(" "),at:c.join(" "),offset:d.join(" ")};b=a.extend({},a.ui.dialog.prototype.options.position,b)}else b=a.ui.dialog.prototype.options.position;e=this.uiDialog.is(":visible"),e||this.uiDialog.show(),this.uiDialog.css({top:0,left:0}).position(a.extend({of:window},b)),e||this.uiDialog.hide()},_setOptions:function(b){var c=this,f={},g=!1;a.each(b,function(a,b){c._setOption(a,b),a in d&&(g=!0),a in e&&(f[a]=b)}),g&&this._size(),this.uiDialog.is(":data(resizable)")&&this.uiDialog.resizable("option",f)},_setOption:function(b,d){var e=this,f=e.uiDialog;switch(b){case"beforeclose":b="beforeClose";break;case"buttons":e._createButtons(d);break;case"closeText":e.uiDialogTitlebarCloseText.text(""+d);break;case"dialogClass":f.removeClass(e.options.dialogClass).addClass(c+d);break;case"disabled":d?f.addClass("ui-dialog-disabled"):f.removeClass("ui-dialog-disabled");break;case"draggable":var g=f.is(":data(draggable)");g&&!d&&f.draggable("destroy"),!g&&d&&e._makeDraggable();break;case"position":e._position(d);break;case"resizable":var h=f.is(":data(resizable)");h&&!d&&f.resizable("destroy"),h&&typeof d=="string"&&f.resizable("option","handles",d),!h&&d!==!1&&e._makeResizable(d);break;case"title":a(".ui-dialog-title",e.uiDialogTitlebar).html(""+(d||"&#160;"))}a.Widget.prototype._setOption.apply(e,arguments)},_size:function(){var b=this.options,c,d,e=this.uiDialog.is(":visible");this.element.show().css({width:"auto",minHeight:0,height:0}),b.minWidth>b.width&&(b.width=b.minWidth),c=this.uiDialog.css({height:"auto",width:b.width}).height(),d=Math.max(0,b.minHeight-c);if(b.height==="auto")if(a.support.minHeight)this.element.css({minHeight:d,height:"auto"});else{this.uiDialog.show();var f=this.element.css("height","auto").height();e||this.uiDialog.hide(),this.element.height(Math.max(f,d))}else this.element.height(Math.max(b.height-c,0));this.uiDialog.is(":data(resizable)")&&this.uiDialog.resizable("option","minHeight",this._minHeight())}}),a.extend(a.ui.dialog,{version:"1.8.21",uuid:0,maxZ:0,getTitleId:function(a){var b=a.attr("id");return b||(this.uuid+=1,b=this.uuid),"ui-dialog-title-"+b},overlay:function(b){this.$el=a.ui.dialog.overlay.create(b)}}),a.extend(a.ui.dialog.overlay,{instances:[],oldInstances:[],maxZ:0,events:a.map("focus,mousedown,mouseup,keydown,keypress,click".split(","),function(a){return a+".dialog-overlay"}).join(" "),create:function(b){this.instances.length===0&&(setTimeout(function(){a.ui.dialog.overlay.instances.length&&a(document).bind(a.ui.dialog.overlay.events,function(b){if(a(b.target).zIndex()<a.ui.dialog.overlay.maxZ)return!1})},1),a(document).bind("keydown.dialog-overlay",function(c){b.options.closeOnEscape&&!c.isDefaultPrevented()&&c.keyCode&&c.keyCode===a.ui.keyCode.ESCAPE&&(b.close(c),c.preventDefault())}),a(window).bind("resize.dialog-overlay",a.ui.dialog.overlay.resize));var c=(this.oldInstances.pop()||a("<div></div>").addClass("ui-widget-overlay")).appendTo(document.body).css({width:this.width(),height:this.height()});return a.fn.bgiframe&&c.bgiframe(),this.instances.push(c),c},destroy:function(b){var c=a.inArray(b,this.instances);c!=-1&&this.oldInstances.push(this.instances.splice(c,1)[0]),this.instances.length===0&&a([document,window]).unbind(".dialog-overlay"),b.remove();var d=0;a.each(this.instances,function(){d=Math.max(d,this.css("z-index"))}),this.maxZ=d},height:function(){var b,c;return a.browser.msie&&a.browser.version<7?(b=Math.max(document.documentElement.scrollHeight,document.body.scrollHeight),c=Math.max(document.documentElement.offsetHeight,document.body.offsetHeight),b<c?a(window).height()+"px":b+"px"):a(document).height()+"px"},width:function(){var b,c;return a.browser.msie?(b=Math.max(document.documentElement.scrollWidth,document.body.scrollWidth),c=Math.max(document.documentElement.offsetWidth,document.body.offsetWidth),b<c?a(window).width()+"px":b+"px"):a(document).width()+"px"},resize:function(){var b=a([]);a.each(a.ui.dialog.overlay.instances,function(){b=b.add(this)}),b.css({width:0,height:0}).css({width:a.ui.dialog.overlay.width(),height:a.ui.dialog.overlay.height()})}}),a.extend(a.ui.dialog.overlay.prototype,{destroy:function(){a.ui.dialog.overlay.destroy(this.$el)}})})(jQuery);;/*! jQuery UI - v1.8.21 - 2012-06-05
+./module/Galerie/src/Galerie/Mail/MailSender.php:        static::$transport->setOptions(new SmtpOptions(array(
+./vendor/doctrine/dbal/lib/Doctrine/DBAL/Schema/Column.php:        $this->setOptions($options);
+./vendor/doctrine/dbal/lib/Doctrine/DBAL/Schema/Table.php:        $column->setOptions($options);
+./vendor/doctrine/dbal/doctrine-dbal-3f7137e/lib/Doctrine/DBAL/Schema/Column.php:        $this->setOptions($options);
+./vendor/doctrine/dbal/doctrine-dbal-3f7137e/lib/Doctrine/DBAL/Schema/Column.php:    public function setOptions(array $options)
+./vendor/doctrine/dbal/doctrine-dbal-3f7137e/lib/Doctrine/DBAL/Schema/Table.php:        $column->setOptions($options);
+./vendor/symfony/console/Symfony/Component/Console/Tests/Formatter/OutputFormatterStyleTest.php:        $style->setOptions(array('reverse', 'conceal'));
+./vendor/symfony/console/Symfony/Component/Console/Tests/Formatter/OutputFormatterStyleTest.php:        $style->setOptions(array('bold'));
+./vendor/symfony/console/Symfony/Component/Console/Tests/Input/InputDefinitionTest.php:        $this->assertEquals(array('foo' => $this->foo), $definition->getOptions(), '->setOptions() sets the array of InputOption objects');
+./vendor/symfony/console/Symfony/Component/Console/Tests/Input/InputDefinitionTest.php:        $definition->setOptions(array($this->bar));
+./vendor/symfony/console/Symfony/Component/Console/Tests/Input/InputDefinitionTest.php:        $this->assertEquals(array('bar' => $this->bar), $definition->getOptions(), '->setOptions() clears all InputOption objects');
+./vendor/symfony/console/Symfony/Component/Console/Tests/Input/InputDefinitionTest.php:            $this->fail('->setOptions() clears all InputOption objects');
+./vendor/symfony/console/Symfony/Component/Console/Tests/Input/InputDefinitionTest.php:            $this->assertInstanceOf('\Exception', $e, '->setOptions() clears all InputOption objects');
+./vendor/symfony/console/Symfony/Component/Console/Formatter/OutputFormatterStyle.php:            $this->setOptions($options);
+./vendor/symfony/console/Symfony/Component/Console/symfony-Console-9400ce2/Tests/Formatter/OutputFormatterStyleTest.php:        $style->setOptions(array('reverse', 'conceal'));
+./vendor/symfony/console/Symfony/Component/Console/symfony-Console-9400ce2/Tests/Formatter/OutputFormatterStyleTest.php:        $style->setOptions(array('bold'));
+./vendor/symfony/console/Symfony/Component/Console/symfony-Console-9400ce2/Tests/Input/InputDefinitionTest.php:    public function testSetOptions()
+./vendor/symfony/console/Symfony/Component/Console/symfony-Console-9400ce2/Tests/Input/InputDefinitionTest.php:        $this->assertEquals(array('foo' => $this->foo), $definition->getOptions(), '->setOptions() sets the array of InputOption objects');
+./vendor/symfony/console/Symfony/Component/Console/symfony-Console-9400ce2/Tests/Input/InputDefinitionTest.php:        $definition->setOptions(array($this->bar));
+./vendor/symfony/console/Symfony/Component/Console/symfony-Console-9400ce2/Tests/Input/InputDefinitionTest.php:        $this->assertEquals(array('bar' => $this->bar), $definition->getOptions(), '->setOptions() clears all InputOption objects');
+./vendor/symfony/console/Symfony/Component/Console/symfony-Console-9400ce2/Tests/Input/InputDefinitionTest.php:            $this->fail('->setOptions() clears all InputOption objects');
+./vendor/symfony/console/Symfony/Component/Console/symfony-Console-9400ce2/Tests/Input/InputDefinitionTest.php:            $this->assertInstanceOf('\InvalidArgumentException', $e, '->setOptions() clears all InputOption objects');
+./vendor/symfony/console/Symfony/Component/Console/symfony-Console-9400ce2/Formatter/OutputFormatterStyle.php:            $this->setOptions($options);
+./vendor/symfony/console/Symfony/Component/Console/symfony-Console-9400ce2/Formatter/OutputFormatterStyle.php:    public function setOptions(array $options)
+./vendor/symfony/console/Symfony/Component/Console/symfony-Console-9400ce2/Formatter/OutputFormatterStyleInterface.php:    public function setOptions(array $options);
+./vendor/symfony/console/Symfony/Component/Console/symfony-Console-9400ce2/Input/InputDefinition.php:        $this->setOptions($options);
+./vendor/symfony/console/Symfony/Component/Console/symfony-Console-9400ce2/Input/InputDefinition.php:    public function setOptions($options = array())
+./vendor/symfony/console/Symfony/Component/Console/Input/InputDefinition.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/I18n/Filter/NumberFormat.php:                $this->setOptions($localeOrOptions);
+./vendor/zendframework/zendframework/library/Zend/I18n/Filter/Alnum.php:                $this->setOptions($allowWhiteSpaceOrOptions);
+./vendor/zendframework/zendframework/library/Zend/I18n/Validator/PostCode.php:                $callback->setOptions(array(
+./vendor/zendframework/zendframework/library/Zend/Filter/Callback.php:            $this->setOptions($callbackOrOptions);
+./vendor/zendframework/zendframework/library/Zend/Filter/StringToLower.php:                $this->setOptions($encodingOrOptions);
+./vendor/zendframework/zendframework/library/Zend/Filter/StringToUpper.php:                $this->setOptions($encodingOrOptions);
+./vendor/zendframework/zendframework/library/Zend/Filter/Compress.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Filter/Compress/AbstractCompressionAlgorithm.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Filter/Null.php:                    $this->setOptions($typeOrOptions);
+./vendor/zendframework/zendframework/library/Zend/Filter/FilterChain.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Filter/RealPath.php:                $this->setOptions($existsOrOptions);
+./vendor/zendframework/zendframework/library/Zend/Filter/Boolean.php:                    $this->setOptions($typeOrOptions);
+./vendor/zendframework/zendframework/library/Zend/Filter/Inflector.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Filter/StringTrim.php:                $this->setOptions($charlistOrOptions);
+./vendor/zendframework/zendframework/library/Zend/Filter/PregReplace.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Json/Server/Request.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Json/Server/Response.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Json/Server/Smd/Service.php:            $this->setOptions($spec);
+./vendor/zendframework/zendframework/library/Zend/Captcha/ReCaptcha.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Ldap/Ldap.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Navigation/Page/AbstractPage.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/View/Helper/Gravatar.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/View/Model/ViewModel.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/View/Resolver/TemplatePathStack.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/View/Variables.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Http/Client.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Http/Client.php:            $this->adapter->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Http/Client.php:        $this->adapter->setOptions($config);
+./vendor/zendframework/zendframework/library/Zend/Http/Client.php:        $this->setOptions(array("outputstream" => $streamfile));
+./vendor/zendframework/zendframework/library/Zend/File/Transfer/Adapter/Http.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Cache/Pattern/AbstractPattern.php:            $this->setOptions(new PatternOptions());
+./vendor/zendframework/zendframework/library/Zend/Cache/StorageFactory.php:            $adapter->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Cache/StorageFactory.php:            $plugin->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Cache/Storage/Adapter/Dba.php:            $this->setOptions(new DbaOptions());
+./vendor/zendframework/zendframework/library/Zend/Cache/Storage/Adapter/AbstractAdapter.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Cache/Storage/Adapter/AbstractAdapter.php:            $this->setOptions(new AdapterOptions());
+./vendor/zendframework/zendframework/library/Zend/Cache/Storage/Adapter/Memory.php:            $this->setOptions(new MemoryOptions());
+./vendor/zendframework/zendframework/library/Zend/Cache/Storage/Adapter/Apc.php:            $this->setOptions(new ApcOptions());
+./vendor/zendframework/zendframework/library/Zend/Cache/Storage/Adapter/Filesystem.php:            $this->setOptions(new FilesystemOptions());
+./vendor/zendframework/zendframework/library/Zend/Cache/Storage/Adapter/Memcached.php:            $memcached->setOptions($options->getLibOptions());
+./vendor/zendframework/zendframework/library/Zend/Cache/Storage/Adapter/Memcached.php:            $this->setOptions(new MemcachedOptions());
+./vendor/zendframework/zendframework/library/Zend/Cache/Storage/Adapter/WinCache.php:            $this->setOptions(new WinCacheOptions());
+./vendor/zendframework/zendframework/library/Zend/Cache/Storage/Plugin/AbstractPlugin.php:            $this->setOptions(new PluginOptions());
+./vendor/zendframework/zendframework/library/Zend/Cache/PatternFactory.php:            $patternName->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Cache/PatternFactory.php:        $pattern->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Tag/Item.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Tag/Cloud/Decorator/AbstractDecorator.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Tag/Cloud.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Console/Prompt/Select.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Console/Getopt.php:        $this->setOptions($getoptConfig);
+./vendor/zendframework/zendframework/library/Zend/Loader/StandardAutoloader.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Loader/ClassMapAutoloader.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Loader/ModuleAutoloader.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Loader/AutoloaderFactory.php:                    $autoloader->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Loader/AutoloaderFactory.php:                static::$loaders[$class]->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/ProgressBar/Adapter/AbstractAdapter.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Form/Element.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Form/Factory.php:            $element->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Feed/PubSubHubbub/Publisher.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Feed/PubSubHubbub/Publisher.php:        $client->setOptions(array(
+./vendor/zendframework/zendframework/library/Zend/Feed/PubSubHubbub/AbstractCallback.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Feed/PubSubHubbub/AbstractCallback.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Feed/PubSubHubbub/Subscriber.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Feed/PubSubHubbub/Subscriber.php:        $client->setOptions(array('useragent' => 'Zend_Feed_Pubsubhubbub_Subscriber/'
+./vendor/zendframework/zendframework/library/Zend/Uri/Uri.php:        $validator->setOptions($validatorParams);
+./vendor/zendframework/zendframework/library/Zend/Serializer/Adapter/AbstractAdapter.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Server/Method/Callback.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Server/Method/Parameter.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Server/Method/Definition.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Server/Method/Prototype.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Barcode/Object/AbstractObject.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Barcode/Renderer/AbstractRenderer.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Mail/Transport/File.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Mail/Transport/Smtp.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Code/Generator/FileGenerator.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Validator/CreditCard.php:                $callback->setOptions($this->getType());
+./vendor/zendframework/zendframework/library/Zend/Validator/File/ImageSize.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Validator/File/ImageSize.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Validator/AbstractValidator.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Soap/Client.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Soap/Server.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Text/Figlet/Figlet.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Text/Table/Table.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/ModuleManager/Listener/AbstractListener.php:            $this->setOptions(new ListenerOptions);
+./vendor/zendframework/zendframework/library/Zend/ModuleManager/Listener/AbstractListener.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Authentication/Adapter/Ldap.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/library/Zend/Authentication/Adapter/Ldap.php:        $this->setOptions(array($ldap->getOptions()));
+./vendor/zendframework/zendframework/library/Zend/Authentication/Adapter/Ldap.php:        $ldap->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/InflectorTest.php:        $inflector->setOptions($config);
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/InflectorTest.php:        $inflector->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/InflectorTest.php:        $inflector->setOptions($config);
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/Compress/Bz2Test.php:        $filter->setOptions(array('blocksize' => 6));
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/Compress/Bz2Test.php:        $filter->setOptions(array('archive' => 'test.txt'));
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/Compress/Bz2Test.php:        $filter->setOptions(array('nooption' => 0));
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/Compress/GzTest.php:        $filter->setOptions(array('nooption' => 'foo'));
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/Compress/GzTest.php:        $filter->setOptions(array('level' => 6));
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/Compress/GzTest.php:        $filter->setOptions(array('mode' => 'deflate'));
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/Compress/GzTest.php:        $filter->setOptions(array('archive' => 'test.txt'));
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/Compress/RarTest.php:        $filter->setOptions(array('nooption' => 'foo'));
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/Compress/RarTest.php:        $filter->setOptions(array('archive' => 'temp.txt'));
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/Compress/RarTest.php:        $filter->setOptions(array('password' => 'test2'));
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/Compress/ZipTest.php:        $filter->setOptions(array('nooption' => 'foo'));
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/Compress/ZipTest.php:        $filter->setOptions(array('archive' => 'temp.txt'));
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/Compress/TarTest.php:        $filter->setOptions(array('nooptions' => 'foo'));
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/Compress/TarTest.php:        $filter->setOptions(array('archive' => 'temp.txt'));
+./vendor/zendframework/zendframework/tests/ZendTest/Filter/FilterChainTest.php:        $chain->setOptions($config);
+./vendor/zendframework/zendframework/tests/ZendTest/Json/Server/SmdTest.php:        $this->smd->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Json/Server/SmdTest.php:        $this->smd->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Json/Server/SmdTest.php:        $this->smd->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Json/Server/SmdTest.php:        $this->smd->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Json/Server/RequestTest.php:        $this->request->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Json/Server/RequestTest.php:        $this->request->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Ldap/OfflineTest.php:            $this->ldap->setOptions(array($optionName => 'irrelevant'));
+./vendor/zendframework/zendframework/tests/ZendTest/Ldap/ConnectTest.php:        $ldap->setOptions($this->options);
+./vendor/zendframework/zendframework/tests/ZendTest/Ldap/CanonTest.php:        $ldap->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Ldap/CanonTest.php:        $ldap->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Ldap/CanonTest.php:        $ldap->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Ldap/CanonTest.php:        $ldap->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Ldap/CanonTest.php:        $ldap->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Ldap/CanonTest.php:        $ldap->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Navigation/Page/PageTest.php:        $page->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Navigation/Page/PageTest.php:        $page->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Navigation/Page/PageTest.php:        $page->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/View/Helper/GravatarTest.php:        $this->helper->__invoke()->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/View/Model/ViewModelTest.php:        $model->setOptions(array('bar' => 'BAZBAT'));
+./vendor/zendframework/zendframework/tests/ZendTest/View/Model/ViewModelTest.php:        $model->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/View/Model/ViewModelTest.php:        $model->setOptions(new stdClass);
+./vendor/zendframework/zendframework/tests/ZendTest/View/TemplatePathStackTest.php:        $this->stack->setOptions($arg);
+./vendor/zendframework/zendframework/tests/ZendTest/View/TemplatePathStackTest.php:        $this->stack->setOptions($arg);
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/TestAdapterTest.php:        $this->adapter->setOptions('foo');
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/TestAdapterTest.php:        $this->adapter->setOptions(array('foo' => 'bar'));
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/CurlTest.php:        $this->_adapter->setOptions($config);
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/CurlTest.php:        $this->_adapter->setOptions($config);
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/CurlTest.php:        $this->_adapter->setOptions($config);
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/CurlTest.php:        $adapter->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/CurlTest.php:        $adapter->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/CurlTest.php:        $adapter->setOptions("foo");
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/CurlTest.php:        $adapter->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/CurlTest.php:        $adapter->setOptions(array('timeout' => 2, 'maxredirects' => 1));
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/CommonHttpTests.php:        $this->client->setOptions(array('strictredirects' => true));
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/CommonHttpTests.php:        $this->client->setOptions(array('strictredirects' => true, 'maxredirects' => 2));
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/CommonHttpTests.php:        $this->client->setOptions(array('strictredirects' => false));
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/CommonHttpTests.php:        $this->client->setOptions(array('maxredirects' => 1));
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/CommonHttpTests.php:        $this->client->setOptions(array('maxredirects' => 1));
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/StaticTest.php:        $this->_client->setOptions($config);
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/StaticTest.php:        $this->_client->setOptions($config);
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/StaticTest.php:        $this->_client->setOptions($config);
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/StaticTest.php:        $this->_client->setOptions(array('param' => 'value1'));
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/StaticTest.php:        $this->_client->setOptions(array('param' => 'value2'));
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/StaticTest.php:        $this->_client->setOptions(array('storeresponse' => false));
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/StaticTest.php:        $this->_client->setOptions(array('timeout' => 3));
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/StaticTest.php:        $this->_client->setOptions(array('encodecookies' => false));
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/SocketTest.php:        $this->_adapter->setOptions($config);
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/SocketTest.php:        $this->_adapter->setOptions($config);
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/SocketTest.php:        $this->_adapter->setOptions($config);
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/SocketTest.php:        $this->_adapter->setOptions($config);
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/SocketTest.php:        $this->client->setOptions(array('timeout' => 1));
+./vendor/zendframework/zendframework/tests/ZendTest/Http/Client/ProxyAdapterTest.php:        $this->_adapter->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/File/Transfer/Adapter/HttpTest.php:        $this->adapter->setOptions(array('ignoreNoFile' => true));
+./vendor/zendframework/zendframework/tests/ZendTest/File/Transfer/Adapter/HttpTest.php:        $this->adapter->setOptions(array('ignoreNoFile' => true));
+./vendor/zendframework/zendframework/tests/ZendTest/File/Transfer/Adapter/HttpTest.php:        $this->adapter->setOptions(array('ignoreNoFile' => true));
+./vendor/zendframework/zendframework/tests/ZendTest/File/Transfer/Adapter/HttpTest.php:        $adapter->setOptions(array('ignoreNoFile' => true));
+./vendor/zendframework/zendframework/tests/ZendTest/File/Transfer/Adapter/AbstractTest.php:        $this->adapter->setOptions(array('ignoreNoFile' => true));
+./vendor/zendframework/zendframework/tests/ZendTest/File/Transfer/Adapter/AbstractTest.php:        $this->adapter->setOptions(array('ignoreNoFile' => false), 'foo');
+./vendor/zendframework/zendframework/tests/ZendTest/File/Transfer/Adapter/AbstractTest.php:        $this->adapter->setOptions(array('useByteString' => false));
+./vendor/zendframework/zendframework/tests/ZendTest/File/Transfer/Adapter/AbstractTest.php:        $this->adapter->setOptions(array('magicFile' => 'test/file'));
+./vendor/zendframework/zendframework/tests/ZendTest/File/Transfer/Adapter/AbstractTest.php:        $this->adapter->setOptions(array('detectInfos' => false));
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Pattern/ObjectCacheTest.php:        $this->_pattern->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Pattern/CommonPatternTest.php:        $this->_pattern->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Pattern/CallbackCacheTest.php:        $this->_pattern->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Pattern/CaptureCacheTest.php:        $this->_pattern->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Pattern/OutputCacheTest.php:        $this->_pattern->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Pattern/ClassCacheTest.php:        $this->_pattern->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/TestAsset/DummyStoragePlugin.php:        $this->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Adapter/AbstractZendServerTest.php:        $this->_storage->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Adapter/MemcachedTest.php:        $this->_storage->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Adapter/AbstractDbaTest.php:        $this->_storage->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Adapter/MemoryTest.php:        $this->_storage->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Adapter/CommonAdapterTest.php:        $this->_storage->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Adapter/CommonAdapterTest.php:            $this->_storage->setOptions($options),
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Adapter/AbstractAdapterTest.php:        $adapter->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Adapter/FilesystemTest.php:        $this->_storage->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Adapter/WinCacheTest.php:        $this->_storage->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Adapter/ApcTest.php:        $this->_storage->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/TestAsset/MockPlugin.php:            $this->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Plugin/SerializerTest.php:        $this->_plugin->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Plugin/OptimizeByFactorTest.php:        $this->_plugin->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Plugin/CommonPluginTest.php:        $this->_plugin->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Plugin/IgnoreUserAbortTest.php:        $this->_plugin->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Plugin/ClearExpiredByFactorTest.php:        $this->_plugin->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Cache/Storage/Plugin/ExceptionHandlerTest.php:        $this->_plugin->setOptions($this->_options);
+./vendor/zendframework/zendframework/tests/ZendTest/Tag/Cloud/CloudTest.php:        $cloud->setOptions(array('tags' => array(array('title' => 'foo', 'weight' => 1))));
+./vendor/zendframework/zendframework/tests/ZendTest/Tag/Cloud/Decorator/HtmlCloudTest.php:        $decorator->setOptions(array('htmlTags' => array('div'), 'separator' => ' '));
+./vendor/zendframework/zendframework/tests/ZendTest/Tag/Cloud/Decorator/HtmlTagTest.php:        $decorator->setOptions(array('minFontSize' => 5, 'maxFontSize' => 10, 'fontSizeUnit' => 'pt'));
+./vendor/zendframework/zendframework/tests/ZendTest/Tag/ItemTest.php:        $tag->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Log/Writer/MailTest.php:        $transport->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Loader/StandardAutoloaderTest.php:                $loader->setOptions(true);
+./vendor/zendframework/zendframework/tests/ZendTest/Loader/StandardAutoloaderTest.php:        $loader->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Loader/StandardAutoloaderTest.php:        $loader->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Loader/ModuleAutoloaderTest.php:        $this->assertInstanceOf('Zend\Loader\ModuleAutoloader', $loader->setOptions(array('foo')));
+./vendor/zendframework/zendframework/tests/ZendTest/Form/FormTest.php:            ->setOptions(array())
+./vendor/zendframework/zendframework/tests/ZendTest/Form/FormTest.php:            ->setOptions(array())
+./vendor/zendframework/zendframework/tests/ZendTest/Form/FormTest.php:        $fileCollection->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Form/View/Helper/FormCheckboxTest.php:        $element->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Form/View/Helper/FormMultiCheckboxTest.php:        $element->setOptions(array('label' => 'Code Type'));
+./vendor/zendframework/zendframework/tests/ZendTest/Form/View/Helper/FormRowTest.php:        $element->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Form/ElementTest.php:        $element->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Form/ElementTest.php:        $element->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Form/ElementTest.php:        $element->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Form/ElementTest.php:        $element->setOptions(null);
+./vendor/zendframework/zendframework/tests/ZendTest/Form/ElementTest.php:        $element->setOptions(new \ArrayObject(array('foo' => 'bar')));
+./vendor/zendframework/zendframework/tests/ZendTest/Form/Element/SelectTest.php:        $element->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Form/Element/CheckboxTest.php:        $element->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Form/Element/MultiCheckboxTest.php:        $element->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Form/Element/CsrfTest.php:        $element->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Form/Element/CollectionTest.php:        $collection->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Form/FieldsetTest.php:        $this->fieldset->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Form/FieldsetTest.php:        $this->fieldset->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Feed/PubSubHubbub/SubscriberTest.php:        $this->subscriber->setOptions(array('hubUrls' => array(
+./vendor/zendframework/zendframework/tests/ZendTest/Feed/PubSubHubbub/SubscriberTest.php:        $this->subscriber->setOptions(array('parameters' => array(
+./vendor/zendframework/zendframework/tests/ZendTest/Feed/PubSubHubbub/PublisherTest.php:        $this->publisher->setOptions(array('hubUrls' => array(
+./vendor/zendframework/zendframework/tests/ZendTest/Feed/PubSubHubbub/PublisherTest.php:        $this->publisher->setOptions(array('updatedTopicUrls' => array(
+./vendor/zendframework/zendframework/tests/ZendTest/Feed/PubSubHubbub/PublisherTest.php:        $this->publisher->setOptions(array('parameters' => array(
+./vendor/zendframework/zendframework/tests/ZendTest/Serializer/Adapter/JsonTest.php:        $adapter->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Barcode/Object/TestCommon.php:        $this->object->setOptions(
+./vendor/zendframework/zendframework/tests/ZendTest/Barcode/Renderer/TestCommon.php:        $this->renderer->setOptions(
+./vendor/zendframework/zendframework/tests/ZendTest/Validator/IpTest.php:        $this->validator->setOptions($this->options);
+./vendor/zendframework/zendframework/tests/ZendTest/Validator/IpTest.php:        $this->validator->setOptions($this->options);
+./vendor/zendframework/zendframework/tests/ZendTest/Validator/IpTest.php:        $this->validator->setOptions($this->options);
+./vendor/zendframework/zendframework/tests/ZendTest/Validator/IpTest.php:        $this->validator->setOptions($this->options);
+./vendor/zendframework/zendframework/tests/ZendTest/Validator/IpTest.php:        $this->validator->setOptions($this->options);
+./vendor/zendframework/zendframework/tests/ZendTest/Validator/IpTest.php:        $this->validator->setOptions($this->options);
+./vendor/zendframework/zendframework/tests/ZendTest/Validator/IpTest.php:        $this->validator->setOptions($this->options);
+./vendor/zendframework/zendframework/tests/ZendTest/Validator/EmailAddressTest.php:        $this->validator->setOptions(array('messages' => array(EmailAddress::INVALID => 'TestMessage')));
+./vendor/zendframework/zendframework/tests/ZendTest/Validator/EmailAddressTest.php:        $this->validator->setOptions(array('hostnameValidator' => new Hostname(Hostname::ALLOW_ALL)));
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ClientTest.php:        $client->setOptions($nonWSDLOptions);
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ClientTest.php:        $client1->setOptions($wsdlOptions);
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ClientTest.php:        $client->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ClientTest.php:        $client->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ClientTest.php:        $client->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ClientTest.php:        $client->setOptions(array(
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ServerTest.php:        $server->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ServerTest.php:        $server->setOptions(array('wsdl' => 'http://www.example.com/test.wsdl'));
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ServerTest.php:        $server->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ServerTest.php:        $server->setOptions(array('location'=>'test://', 'uri'=>'http://framework.zend.com'));
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ServerTest.php:        $server->setOptions(array('location'=>'test://', 'uri'=>'http://framework.zend.com'));
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ServerTest.php:        $server->setOptions(array('location'=>'test://', 'uri'=>'http://framework.zend.com'));
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ServerTest.php:        $server1->setOptions(array('location'=>'test://', 'uri'=>'http://framework.zend.com'));
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ServerTest.php:        $server->setOptions(array('location'=>'test://', 'uri'=>'http://framework.zend.com'));
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ServerTest.php:        $server->setOptions($config);
+./vendor/zendframework/zendframework/tests/ZendTest/Soap/ServerTest.php:        $server->setOptions(array('location'=>'test://', 'uri'=>'http://framework.zend.com'));
+./vendor/zendframework/zendframework/tests/ZendTest/Session/Config/SessionConfigTest.php:        $this->config->setOptions($options);
+./vendor/zendframework/zendframework/tests/ZendTest/Session/Config/StandardConfigTest.php:        $this->config->setOptions($options);

@@ -1,0 +1,28 @@
+<h1><?php echo $this->translate('Galerie_index_title', 'galerie'); ?></h1>
+
+<?php if ($last !== null): ?>
+<a href="/galeries/voir/<?php echo $last; ?>" alt="Retourner voir le dernier élément vu">Dernier élément vu</a>
+<?php endif; ?>
+
+<table id="galeries" class="sorted">
+	<thead>
+		<tr>
+			<th>
+				<strong><?php echo $this->translate('Galerie_index_table_name', 'galerie'); ?></strong>
+				<em><?php echo $this->translate('Galerie_index_table_description', 'galerie'); ?></em>
+			</th>
+			<th>
+				<?php echo $this->translate('Galerie_index_table_username', 'galerie'); ?>
+			</th>
+			<th>
+				<?php echo $this->translate('Galerie_index_table_nb', 'galerie'); ?>
+			</th>
+			<th>
+				<?php echo $this->translate('Galerie_index_table_actions', 'galerie'); ?>
+			</th>
+		</tr>
+	</thead>
+	<tbody>
+	</tbody>
+</table>
+<img src="/galeries/pie" alt="Répartition des photographies par galerie" />

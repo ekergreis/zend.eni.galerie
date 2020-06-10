@@ -1,0 +1,16 @@
+<p>vue <em>back-office</em> d&rsquo;une <strong>galerie</strong>&nbsp;: view</p>
+
+<h1>Galerie courante</h1>
+<p>Nom&nbsp;: <?php echo $galerie->name; ?></p>
+<p>Description&nbsp;: <?php echo $galerie->description; ?></p>
+<p>Propriétaire&nbsp;: <?php echo $galerie->username; ?></p>
+<p>Nombre de photographies&nbsp;: <?php echo $galerie->nb; ?></p>
+
+<h1>Navigation</h1>
+<h2>Accès direct aux autres galeries</h2>
+<ul>
+<?php foreach($pairs as $id => $name): ?>
+<li><a src="/galeries/voir/<?php echo $id; ?>"><?php echo $name; ?></a></li>
+<?php endforeach; ?>
+</ul>
+
